@@ -1,18 +1,31 @@
-## Getting Started
+COMPX201-23A — Assignment Two
+Binary Search Trees
+Due: Friday, 28 April 2023 — 11.55pm (15%)
+Description: This assignment is intended to give you experience building, maintaining and using a binary search tree (BST). You must write your own BST class and all its required operations.
 
-Welcome to the VS Code Java world. Here is a guideline to help you get started to write Java code in Visual Studio Code.
+The data in your BST are bank accounts, where an integer account number is the key that uniquely identifies a node and is used for ordering the tree. Associated with each node is also a bank balance, expressed as a double-precision floating point number (i.e. Java double). Your program will process a file of bank transactions that include deposits, withdrawals and account closures, and these transactions will determine what happens to your BST.
 
-## Folder Structure
+Specification: Your program should run as a console program from the Linux command-line (i.e. no GUI). Your program class should be called XProcess.java and it should accept as a command-line argument the name of a text file expected to be in the same directory. Each line of the input file is comprised of three fields, separated by spaces. The first field is an integer that is an account number; the second field is a single letter indicating whether the transaction is a deposit, a withdrawal or an account closure ('d', 'w' or 'c' respectively); and the third field is a floating point number specifying the magnitude of the transaction (i.e. how much money). Your program must also conform to the following specification:
 
-The workspace contains two folders by default, where:
+Define a data class called Account (in a file by itself) to keep information about one bank account. It needs an integer field called "key" to hold the account number that uniquely identifies this account. Associated with that account is also a double-precision floating point field (i.e. Java double) called "balance" to keep track of how much money is in this account. These fields must be private, but you will need public methods to "getKey()" and "getBalance()" to gain access to these values. And you will need a "setBalance()" public method to update the balance based upon the type and value of a transaction. This "setBalance" method takes a double value as an argument indicating how much the balance should be changed by. You must define a constructor that takes an account number and an opening balance as arguments.
+Define a class called BankBST in a file by itself. This has all the methods needed to build and maintain a BST of Accounts.
+BankBST will need public methods to support being able to add a new account, find an existing account, remove an existing account, and traverse the entire tree. The order of Accounts in the tree and the manner by which the methods affect the structure of the tree should be as is conventional for a binary search tree. (N.b. No height-balancing is required for this assignment.)
+The find() method should return a reference to the Account being sought, or null if no such account exists in the tree.
+XProcess will have a BankBST private member variable to maintain a set of Accounts.
+XProcess will open the text file whose name was provided on the command-line and process it, updating the Accounts accordingly. If there is any problem opening or accessing the input file, your program should print an error message, and then exit.
+If a transaction is a deposit, then the corresponding Account should have its balance increased by the amount of the transaction.
+If a transaction is a withdrawal, then the corresponding Account balance should be decreased by the amount of this transaction.
+If a transaction is a closure, then the corresponding account should be removed from the BankBST.
+The amount associated with a transaction will always be supplied as a positive floating point value, which must be added to the balance on a deposit, but subtracted from the balance on a withdrawal. It can be ignored for an account closure and is supplied as a dummy value simply to make file processing uniform/simple.
+If a deposit or withdrawal is made on an Account not already in the BankBST then first create that account with a zero balance and then execute the transaction. If the Account does not exist for a closure, then nothing happens to the tree.
+Any errors detected on input should result in your program ignoring the entire transaction; just move on to the next line.
+For each transaction, your program is to output the list of "keys" encountered along the search path from the root to the target Account. These should be listed on one line, each key separated by a space; thus the list should start with the root "key" and end with the target's "key". After this, at the end of each line of output, should be the word "DEPOSIT" or "WITHDRAW" or "CLOSE" in accordance with the transaction "type".
+Given that any transaction requires an attempt to find an account first, you may have your find() method print out the keys along the search path, or you can have a separate method within your BST that prints the required output after the transaction has been carried out.
+After the entire input file has been processed, your program must print out a line that just says "RESULT"; after which it must print out all the account keys and corresponding balances, one pair per line, in ascednidng order by account number for the Accounts still in your BST. (Hint: in-order traversal.)
+You may add any other member methods or variables you deem useful to complete this assignment.
+Expected usage is "java Xprocess transactions.txt" where the argument is the name of a plaintext transaction file in the current directory.
+The point of the output is just to make sure your tree has been maintained correctly. A sample file and its correct output will be posted on the course webpage (i.e. Moodle) so that you can check your program conforms to this specification; but your program will be tested on a much larger file and a sample will be posted on Moodle the week before your assignment is due.
 
-- `src`: the folder to maintain sources
-- `lib`: the folder to maintain dependencies
+Submission: Make sure your code is properly formatted and well-documented, including your name and student identification number. Submit your source code only (and optional ReadMe text file) in an otherwise empty directory/folder via Moodle in the usual way. If you can only upload one file (for whatever reason) then create an archive file out of your directory. Search the web for "create tarball on linux" for help with this.
 
-Meanwhile, the compiled output files will be generated in the `bin` folder by default.
-
-> If you want to customize the folder structure, open `.vscode/settings.json` and update the related settings there.
-
-## Dependency Management
-
-The `JAVA PROJECTS` view allows you to manage your dependencies. More details can be found [here](https://github.com/microsoft/vscode-java-dependency#manage-dependencies).
+Tony C. Smith, 30/3/2023
