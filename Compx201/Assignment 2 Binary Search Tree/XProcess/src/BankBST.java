@@ -1,12 +1,12 @@
-import Account.Node;
+
 
 public class BankBST{
 
-    Account.Node root;
+    static Account.Node root;
 
-    public void add(int key , double balance){
-        Account.Node newNode = new Account.Node(key, balance);
-
+    public static void add(int key , double balance){
+        Account.Node newNode = new Account.Node(key,balance);
+        
         if (root == null){//If nothing is in the tree
             root = newNode;
 
@@ -14,23 +14,28 @@ public class BankBST{
             Account.Node focusNode = root;
             Boolean added = false;
             Account.Node parent ;
-            while (added){
+            
+            while (added == false){
                 parent = focusNode;
-                if (key < focusNode.key){//key smaller then go to left child
+                if (key < focusNode.getKey()){//key smaller then go to left child
                     focusNode = focusNode.leftChild;
                     if (focusNode == null){//if left child is null add new node
                         parent.leftChild = newNode;
+                        
                         added = true;
                     }
                 } else {//else key bigger go to right child
                 focusNode = focusNode.rightChild;  
                     if (focusNode == null){//if right child is null add new node
                         parent.rightChild = newNode;
+                        
                         added = true;
                     }
             }
             }        
         }
+        //System.out.println(newNode.balance);
+        //System.out.println(root.balance + " " + root.leftChild + " " + root.rightChild);
     }
 
     public void inOrderTraverseTree(Account.Node focusNode){
@@ -44,11 +49,13 @@ public class BankBST{
         }
     }
 
-    public Account.Node find(int key){
+    public static Account.Node find(int key){
         Account.Node focusNode = root;
-
-        while (focusNode.key != key){
-            if (key < focusNode.key){
+        if (focusNode == null) {
+            return null;
+        }
+        while (focusNode.getKey() != key){
+            if (key < focusNode.getKey()){
                 focusNode = focusNode.leftChild;
             }else {
                 focusNode = focusNode.rightChild;
